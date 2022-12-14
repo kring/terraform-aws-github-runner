@@ -23,7 +23,7 @@ Write-Host  "Reteieved ghr:environment tag - ($environment)"
 $ssm_config_path=$tags.Tags.where( {$_.Key -eq 'ghr:ssm_config_path'}).value
 Write-Host  "Reteieved ghr:ssm_config_path tag - ($ssm_config_path)"
 
-$parameters=$(aws ssm get-parameters-by-path --path "/$ssm_config_path" --region "$Region" --query "Parameters[*].{Name:Name,Value:Value}") | ConvertFrom-Json
+$parameters=$(aws ssm get-parameters-by-path --path "$ssm_config_path" --region "$Region" --query "Parameters[*].{Name:Name,Value:Value}") | ConvertFrom-Json
 Write-Host  "Retrieved parameters from AWS SSM"
 
 $run_as=$parameters.where( {$_.Name -eq "/$ssm_config_path/run_as"}).value
